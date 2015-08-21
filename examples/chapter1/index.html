@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Handlebars Quickstart</title>
+	<script src="handlebars.min.js"></script>
+</head>
+<body>
+	<script>
+		var src = "<h1>Hello {{name}}</h1>";
+		var template = Handlebars.compile(src);
+		var output = template({name : 'UtkinG'});
+		document.body.innerHTML += output;
+	</script>
+</body>
+</html>
