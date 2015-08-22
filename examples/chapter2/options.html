@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8" />
 	<title>Handlebars Quickstart</title>
 	<script src="handlebars.min.js"></script>
 </head>
 <body>
 	<script id="quickstart" type="template/handlebars">
+		<div>{{greetings}}</div>
 		<div>List of colors {{list colors}}</div>
 		<hr>
 		<div>Reversed list of colors {{list colors reverse="on"}}</div>
 	</script>
 	<script>
+		Handlebars.registerHelper('greetings', function(options) {
+			switch (options.data.lang) {
+				case "ru":
+					return "Привет!";
+				case "es":
+					return "Hola!";
+				default:
+					return "Hello!";
+			}
+		});
+
 		Handlebars.registerHelper('list', function(items, options) {
 			var html = "<ul>";
-			
+
 			if (!options.hash.reverse || options.hash.reverse === "off") {
 				items.forEach(function(item) {
 					html += "<li>" + Handlebars.Utils.escapeExpression(item) + "</li>";
@@ -29,7 +42,7 @@
 		});
 		var src = document.getElementById('quickstart').innerHTML;
 		var template = Handlebars.compile(src);
-		var output = template({colors : ['red', 'blue', 'green']});
+		var output = template({colors : ['red', 'blue', 'green']}, {data: {lang: 'es'}});
 		document.body.innerHTML += output;
 	</script>
 </body>
