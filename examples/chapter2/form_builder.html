@@ -14,6 +14,14 @@
 		{{/formIt}}
 
 		{{formIt user}}
+
+		<div>
+			<p>Block helpers shortcut for arrays</p>
+			{{#numbers}}
+				<li>{{number}}<sup>4</sup> = {{power}}</li>
+			{{/numbers}}
+		</div>
+		
 	</script>
 	<script>
 		var user = {
@@ -21,6 +29,11 @@
 			age: 34,
 			fired: true
 		};
+
+		var numbers = [
+			{number: 1, power: Math.pow(1,4)},
+			{number: 4, power: Math.pow(4,4)}
+		];
 
 		Handlebars.registerHelper('formIt', function(data, options) {
 			var fields = {};
@@ -63,7 +76,7 @@
 
 		var src = document.getElementById('quickstart').innerHTML;
 		var template = Handlebars.compile(src);
-		var output = template({user: user});
+		var output = template({user: user, numbers : numbers});
 		document.body.innerHTML += output;
 	</script>
 </body>
