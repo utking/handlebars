@@ -7,25 +7,38 @@
 <body>
 	<script id="quickstart" type="template/handlebars">
 		<div>
-			{{#selector}}
-				one
-				two
-				three
-				four
-				five
-			{{/selector}}
+			<table>
+				<thead>
+					<tr>
+						<th>Number</th>
+						<th>Result</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#power 8}}
+						<tr>
+							<td>{{number}}<sup>{{pow}}</sup> = </td>
+							<td>{{result}}</td>
+						</tr>
+					{{/power}}
+				</tbody>
+			</table>
 		</div>
 	</script>
 	<script>
-		Handlebars.registerHelper('selector', function(options) {
-			var list = options.fn();
-			var items = list.trim().split('\n');
-			var html = "<select>";
+		Handlebars.registerHelper('power', function(number, options) {
+			var html = "";
+			var num = parseInt(number);
 
-			items.forEach(function(item) {
-				html += "<option>" + item + "</option>";
-			});
-			html += "</select>";
+			for (var i = 0; i < 20; i++) {
+				var data = {
+					number: num,
+					pow: i+1,
+					result: Math.pow(num, i+1)
+				};
+
+				html += options.fn(data);
+			}
 
 			return html;
 		});
