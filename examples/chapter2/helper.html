@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Handlebars Quickstart</title>
+	<script src="handlebars.min.js"></script>
+</head>
+<body>
+	<script id="quickstart" type="template/handlebars">
+		<h1>Reversed version of {{txt}} is {{reverse txt}}</h1>
+	</script>
+	<script>
+		Handlebars.registerHelper('reverse', function(txt) {
+			return txt.split("").reverse().join("");
+		});
+		var src = document.getElementById('quickstart').innerHTML;
+		var template = Handlebars.compile(src);
+		var output = template({txt : 'some text'});
+		document.body.innerHTML += output;
+	</script>
+</body>
+</html>
