@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Handlebars Quickstart</title>
+	<script src="handlebars.min.js"></script>
+</head>
+<body>
+	<script id="quickstart" type="template/handlebars">
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<th>Messages</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#messages messages}}
+						<tr>
+							<td>{{text}}</td>
+						</tr>
+					{{else}}
+						<tr>
+							<td style="color: red; font-weight: bolder;">{{text}}</td>
+						</tr>
+					{{/messages}}
+				</tbody>
+			</table>
+		</div>
+	</script>
+	<script>
+		Handlebars.registerHelper('messages', function(list, options) {
+			var html = "";
+			console.log(list)
+			list = list || [];
+			list.forEach(function(item) {
+				if (item.important) {
+					html += options.inverse(item);
+				} else {
+					html += options.fn(item);
+				}
+			});
+
+			return html;
+		});
+
+		var messages = [
+			{text: 'Some message', important: false},
+			{text: 'Call from John', important: false},
+			{text: 'Urgent message', important: true},
+			{text: 'Incoming messages', important: false},
+			{text: 'Server fail!!!', important: true}
+		];
+
+		var src = document.getElementById('quickstart').innerHTML;
+		var template = Handlebars.compile(src);
+		var output = template({messages: messages});
+		document.body.innerHTML += output;
+	</script>
+</body>
+</html>
