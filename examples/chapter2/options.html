@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Handlebars Quickstart</title>
+	<script src="handlebars.min.js"></script>
+</head>
+<body>
+	<script id="quickstart" type="template/handlebars">
+		<div>List of colors {{list colors}}</div>
+		<hr>
+		<div>Reversed list of colors {{list colors reverse="on"}}</div>
+	</script>
+	<script>
+		Handlebars.registerHelper('list', function(items, options) {
+			var html = "<ul>";
+			
+			if (!options.hash.reverse || options.hash.reverse === "off") {
+				items.forEach(function(item) {
+					html += "<li>" + Handlebars.Utils.escapeExpression(item) + "</li>";
+				});
+			} else {
+				items.reverse().forEach(function(item) {
+					html += "<li>" + Handlebars.Utils.escapeExpression(item) + "</li>";
+				});
+			}
+
+			html += "</ul>";
+			return new Handlebars.SafeString(html);
+		});
+		var src = document.getElementById('quickstart').innerHTML;
+		var template = Handlebars.compile(src);
+		var output = template({colors : ['red', 'blue', 'green']});
+		document.body.innerHTML += output;
+	</script>
+</body>
+</html>
