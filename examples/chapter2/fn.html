@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Handlebars Quickstart</title>
+	<script src="handlebars.min.js"></script>
+</head>
+<body>
+	<script id="quickstart" type="template/handlebars">
+		<div>
+			{{#selector}}
+				one
+				two
+				three
+				four
+				five
+			{{/selector}}
+		</div>
+	</script>
+	<script>
+		Handlebars.registerHelper('selector', function(options) {
+			var list = options.fn();
+			var items = list.trim().split('\n');
+			var html = "<select>";
+
+			items.forEach(function(item) {
+				html += "<option>" + item + "</option>";
+			});
+			html += "</select>";
+
+			return html;
+		});
+
+		var src = document.getElementById('quickstart').innerHTML;
+		var template = Handlebars.compile(src);
+		var output = template();
+		document.body.innerHTML += output;
+	</script>
+</body>
+</html>
