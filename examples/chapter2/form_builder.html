@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Handlebars Quickstart</title>
+	<script src="handlebars.min.js"></script>
+</head>
+<body>
+	<script id="quickstart" type="template/handlebars">
+		{{#formIt user}}
+			<div>Name: {{name}}</div>
+			<div>Age: {{age}}</div>
+			<div>Is fired: {{fired}}</div>
+			{{submit}}
+		{{/formIt}}
+
+		{{formIt user}}
+	</script>
+	<script>
+		var user = {
+			name: 'UtkinG',
+			age: 34,
+			fired: true
+		};
+
+		Handlebars.registerHelper('formIt', function(data, options) {
+			var fields = {};
+
+			for (item in data) {
+				var item_html = "";
+				var value = Handlebars.Utils.escapeExpression(data[item]);
+				switch (typeof data[item]) {
+					case 'string':
+						item_html = '<input type="text" name="' + item + '" value="' + value + '">';
+						break;
+					case 'number':
+						item_html = '<input type="number" name="' + item + '" value="' + value + '">';
+						break;
+					case 'boolean':
+						var checked = (data[item] ? "checked" : "");
+						item_html = '<input type="checkbox" name="' + item + '" ' + checked + '>';
+						break;
+					default:
+						item_html = '<div>Unknown type</div>';
+				}
+
+				fields[item] = new Handlebars.SafeString(item_html);
+			}
+			console.log(fields);
+
+			var out = "<form>";
+			if (typeof options.fn === 'undefined') {
+				for (item in fields) {
+					out += "<div>" + item + ": " + fields[item] + "</div>";
+				}
+				out += new Handlebars.SafeString('<button name="submit" >Submit</button>');
+				
+			} else {
+				fields.submit = new Handlebars.SafeString('<button name="submit" >Submit</button>');
+				out += options.fn(fields);
+			}
+			out += '</form>';
+			return new Handlebars.SafeString(out);
+		});
+
+		var src = document.getElementById('quickstart').innerHTML;
+		var template = Handlebars.compile(src);
+		var output = template({user: user});
+		document.body.innerHTML += output;
+	</script>
+</body>
+</html>
