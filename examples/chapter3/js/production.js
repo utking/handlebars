@@ -1,7 +1,6 @@
 require.config({
 	paths: {
-		"p": "precomp",
-		"h": "helpers"
+		"p": "precomp"
 	},
 	shim: {
 		"handlebars": {
@@ -11,11 +10,8 @@ require.config({
 });
 
 require(
-	['p/home', 'h/userfy', 'p/partials'],
-	function (home, userfy, partials) {
-		var helpers = {
-			"userfy": userfy	
-		};
-		var html = home({name: "Gabriel"}, {helpers: helpers});
+	['p/home', 'p/helpers', 'p/partials'],
+	function (home, helpers, partials) {
+		var html = home({name: "Gabriel"});
 		document.body.innerHTML += html;
 	});
