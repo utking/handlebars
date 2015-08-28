@@ -1,1 +1,1 @@
-=== Learning Handlebars.js library ===
+## Learning Handlebars.js library
